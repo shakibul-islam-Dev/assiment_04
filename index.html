@@ -3,7 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font awsam CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Tailwin Css -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Daisyui -->
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
       rel="stylesheet"
@@ -14,9 +31,37 @@
       rel="stylesheet"
       type="text/css"
     />
+    <style>
+      * {
+        font-family: 'Geist', sans-serif;
+      }
+    </style>
     <title>Job Application Tracker</title>
   </head>
   <body>
+    <!-- Header -->
+    <header class="w-[60%] mx-auto pt-15 space-y-10">
+      <div>
+        <h1 class="text-4xl font-bold text-[#002C5C]">
+          Job Application Tracker
+        </h1>
+      </div>
+      <div id="cards" class="grid grid-cols-3">
+        <div id="total" class="text-[14px] font-medium text-[#323B49]">
+          Total <span class="block text-[#002C5C] text-2xl font-bold">0</span>
+        </div>
+        <div id="interView" class="text-[14px] font-medium text-[#323B49]">
+          Interview<span class="block text-[#10B981] text-2xl font-bold"
+            >0</span
+          >
+        </div>
+        <div id="rejecetd" class="text-[14px] font-medium text-[#323B49]">
+          Rejected<span class="block text-[#EF4444] text-2xl font-bold">0</span>
+        </div>
+      </div>
+    </header>
+    <main id="main"></main>
+    <!-- Script FILE -->
     <script src="app.js"></script>
   </body>
 </html>
