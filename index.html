@@ -99,6 +99,8 @@
         </button>
       </div>
     </section>
+    <section id="filter-element" class="hidden "p-6 space-y-15"></section>
+
     <main id="main" class="">
       <!-- Allcard -->
       <div id="total-cards" class="p-6 space-y-15">
@@ -114,21 +116,19 @@
                 React Native Developer
               </p>
             </div>
-            <div
-              class="job-type flex items-center gap-2 text-slate-500 font-medium"
-            >
-              <span>Remote</span>
+            <div class="flex items-center gap-2 text-slate-500 font-medium">
+              <span class="job-type">Remote</span>
               <span class="text-[6px] text-slate-500">
                 <i class="fa-solid fa-circle"></i
               ></span>
-              <span>Full-time</span>
+              <span class="job-time">Full-time</span>
               <span class="text-[6px] text-slate-500">
                 <i class="fa-solid fa-circle"></i
               ></span>
-              <span>$130,000 - $175,000</span>
+              <span class="jobSalry">$130,000 - $175,000</span>
             </div>
             <div class="space-y-2">
-              <button id="job-status" class="btn btn-soft text-[14px]">
+              <button class="job-status btn btn-soft text-[14px]">
                 Not Applied
               </button>
               <p class="job-description text-gray-700">
@@ -137,17 +137,17 @@
               </p>
             </div>
             <div class="job-btn space-x-2">
-              <button id="interview-btn" class="btn btn-outline btn-success">
+              <button class="interview-btn btn btn-outline btn-success">
                 INTERVIEW
               </button>
-              <button id="rejecetd-btn" class="btn btn-outline btn-error">
+              <button class="rejecetd-btn btn btn-outline btn-error">
                 REJECTED
               </button>
             </div>
           </div>
           <!-- Card DElet butoon -->
           <button class="btn btn-ghost btn-error btn-outline">
-            <i id="delet-btn" class="fa-regular fa-trash-can"></i>
+            <i class="delet-btn fa-regular fa-trash-can"></i>
           </button>
         </div>
       </div>
