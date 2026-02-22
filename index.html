@@ -47,19 +47,29 @@
         </h1>
       </div>
       <div id="cards" class="grid grid-cols-3">
-        <div id="total" class="text-[14px] font-medium text-[#323B49]">
-          Total <span class="block text-[#002C5C] text-2xl font-bold">0</span>
-        </div>
-        <div id="interview" class="text-[14px] font-medium text-[#323B49]">
-          Interview<span class="block text-[#10B981] text-2xl font-bold"
+        <div class="text-[14px] font-medium text-[#323B49]">
+          Total
+          <span id="total" class="block text-[#002C5C] text-2xl font-bold"
             >0</span
           >
         </div>
-        <div id="rejecetd" class="text-[14px] font-medium text-[#323B49]">
-          Rejected<span class="block text-[#EF4444] text-2xl font-bold">0</span>
+        <div class="text-[14px] font-medium text-[#323B49]">
+          Interview<span
+            id="interview"
+            class="block text-[#10B981] text-2xl font-bold"
+            >0</span
+          >
+        </div>
+        <div class="text-[14px] font-medium text-[#323B49]">
+          Rejected<span
+            id="rejecetd"
+            class="block text-[#EF4444] text-2xl font-bold"
+            >0</span
+          >
         </div>
       </div>
     </header>
+    <!-- section btn -->
     <section>
       <div id="text-content" class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-[#002C5C]">Available Jobs</h1>
@@ -67,17 +77,23 @@
       </div>
       <div class="tabs tabs-boxed bg-transparent p-0 gap-2">
         <button
+          onclick="toggleStyle('all-toggle')"
+          id="all-toggle"
           class="tab bg-blue-500 text-white font-semibold rounded-md px-6"
         >
           All
         </button>
         <button
-          class="tab bg-white border border-gray-100 rounded-md px-6 text-[#64748B]"
+          onclick="toggleStyle('interview-toggle')"
+          id="interview-toggle"
+          class="tab bg-white rounded-md px-6 text-[#64748B]"
         >
           Interview
         </button>
         <button
-          class="tab bg-white border border-gray-100 rounded-md px-6 text-[#64748B]"
+          onclick="toggleStyle('rejecetd-toggle')"
+          id="rejecetd-toggle"
+          class="tab bg-white rounded-md px-6 text-[#64748B]"
         >
           Rejected
         </button>
@@ -117,12 +133,16 @@
               </p>
             </div>
             <div class="job-btn space-x-2">
-              <button class="btn btn-outline btn-success">INTERVIEW</button>
-              <button class="btn btn-outline btn-error">REJECTED</button>
+              <button id="interview-btn" class="btn btn-outline btn-success">
+                INTERVIEW
+              </button>
+              <button id="rejecetd-btn" class="btn btn-outline btn-error">
+                REJECTED
+              </button>
             </div>
           </div>
           <!-- Card DElet butoon -->
-          <button class="btn btn-ghost btn-error btn-outline">
+          <button id="delet-btn" class="btn btn-ghost btn-error btn-outline">
             <i class="fa-regular fa-trash-can"></i>
           </button>
         </div>
