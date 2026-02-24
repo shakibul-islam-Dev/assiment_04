@@ -1,256 +1,262 @@
+// Array Container Initilization
 let interviewList = []
 let rejecetdList = []
 let currntStatus = 'all-toggle'
 //header btn
-let grandToatal = document.getElementById('total')
-let interViewToatal = document.getElementById('interview')
-let rejecetdToatal = document.getElementById('rejecetd')
-let cardsToatal = document.getElementById('total-cards')
-let jobCount = document.getElementById('jobs-count')
-const filterElement = document.getElementById('filter-element')
+let grandTotal = document.getElementById('total')//done
+let interViewTotal = document.getElementById('interview')//done
+let rejectTotal = document.getElementById('rejecet')//done
+let jobCount = document.getElementById('jobs-count')//done
+let notFound = document.getElementById('not-found')
+//header all button work done
+//toggle buttons
+const alltoggle = document.getElementById('all-toggle')
+const interviewtoggle = document.getElementById('interview-toggle')
+const rejecetdtoggle = document.getElementById('rejecetd-toggle')
+//toggle button done
+//Filter Section
+let filterSection = document.getElementById('filter-section')
+//cardSection
+let totalCards = document.getElementById('total-cards')
+let interviewButton = document.getElementsByClassName('interview-btn')
+let rejectButton = document.getElementsByClassName('rejecetd-btn')
+
+let cardParent = document.getElementsByClassName('card-parent')
+const cardContent = document.querySelector('.card-content')
+
+
+
 //main area btn
-let deletBtn = document.getElementsByClassName('delet-btn')
-
-let interviewFilter = document.getElementById('filter-element')
-
-const mainContainer = document.querySelector('main')
-const mainCard = document.querySelector('main-card')
-const cardContent = document.querySelector('.main-card-content')
-//25% done
+//setTotal 100% working done
 function setTotal() {
-  let count = cardsToatal.children.length
-  grandToatal.innerText = count
-  jobCount.innerText = `${count} Jobs`
-  interViewToatal.innerText = interviewList.length
-  rejecetdToatal.innerText = rejecetdList.length
+    let count = totalCards.children.length
+    grandTotal.innerText = count
+    jobCount.innerText = `${count} Jobs`
+    interViewTotal.innerText = interviewList.length
+    rejectTotal.innerText = rejecetdList.length
+    checkEmptyState()
 }
 setTotal()
 //Toggling Function
 function toggleStyle(id) {
-  //Toggle button
-  let alltoggle = document.getElementById('all-toggle')
-  let interviewtoggle = document.getElementById('interview-toggle')
-  let rejecetdtoggle = document.getElementById('rejecetd-toggle')
-  //toggle button classlist add
-  alltoggle.classList.remove('bg-blue-500', 'text-white', 'font-semibold')
-  alltoggle.classList.add('bg-white', 'text-[#64748B]')
+    //toggle button classlist add
+    alltoggle.classList.remove('bg-blue-500', 'text-white', 'font-semibold')
+    alltoggle.classList.add('bg-white', 'text-[#64748B]')
+    interviewtoggle.classList.remove('bg-blue-500', 'text-white', 'font-semibold')
+    interviewtoggle.classList.add('bg-white', 'text-[#64748B]')
+    rejecetdtoggle.classList.remove('bg-blue-500', 'text-white', 'font-semibold')
+    rejecetdtoggle.classList.add('bg-white', 'text-[#64748B]')
+    //selected button class list add
+    const selectdBtn = document.getElementById(id)
+    currntStatus = id
+    selectdBtn.classList.remove('bg-white', 'text-[#64748B]')
+    selectdBtn.classList.add('bg-blue-500', 'text-white', 'font-semibold')
 
-  interviewtoggle.classList.remove('bg-blue-500', 'text-white', 'font-semibold')
-  interviewtoggle.classList.add('bg-white', 'text-[#64748B]')
+    if (totalCards.children.length === 0) {
+        totalCards.classList.add('hidden')
+        notFound.classList.remove('hidden')
+    }
+    if (id == 'interview-toggle') {
+        totalCards.classList.add('hidden')
+        filterSection.classList.remove('hidden')
+        renderList(interviewList);
 
-  rejecetdtoggle.classList.remove('bg-blue-500', 'text-white', 'font-semibold')
-  rejecetdtoggle.classList.add('bg-white', 'text-[#64748B]')
-  //selected button class list add
-  const selectdBtn = document.getElementById(id)
-  currntStatus = id
-  selectdBtn.classList.remove('bg-white', 'text-[#64748B]')
-  selectdBtn.classList.add('bg-blue-500', 'text-white', 'font-semibold')
-  if (id == 'interview-toggle') {
-    cardsToatal.classList.add('hidden')
-    filterElement.classList.remove('hidden')
-    renderElement()
-  } else if (id == 'all-toggle') {
-    cardsToatal.classList.remove('hidden')
-    filterElement.classList.add('hidden')
-  } else if (id == 'rejecetd-toggle') {
-    cardsToatal.classList.add('hidden')
-    filterElement.classList.remove('hidden')
-    renderElementReject()
-  }
+    } else if (id == 'all-toggle') {
+        totalCards.classList.remove('hidden')
+        filterSection.classList.add('hidden')
+    }
+    else if (id == 'rejecetd-toggle') {
+        totalCards.classList.add('hidden')
+        filterSection.classList.remove('hidden')
+        renderList(rejecetdList);
+    }
+    setTotal()
 }
-//1 div compelte
+function checkEmptyState() {
+    const allEmpty = (currntStatus === 'all-toggle' && totalCards.children.length === 0);
+    const interviewEmpty = (currntStatus === 'interview-toggle' && interviewList.length === 0);
+    const rejectEmpty = (currntStatus === 'rejecetd-toggle' && rejecetdList.length === 0);
 
-mainContainer.addEventListener('click', function (event) {
-  const parentNode = event.target.parentNode.parentNode.closest('.main-card')
-  
-  const jobName = parentNode.querySelector('.job-name').innerText
-  const jobSkill = parentNode.querySelector('.job-skill').innerText
-  const jobType = parentNode.querySelector('.job-type').innerText
-  const jobTime = parentNode.querySelector('.job-time').innerText
-  const jobSalary = parentNode.querySelector('.jobSalry').innerText
-  let jobStatus = parentNode.querySelector('.job-status').innerText
-  const jobDescription = parentNode.querySelector('.job-description').innerText
+    if (allEmpty || interviewEmpty || rejectEmpty) {
+        notFound.classList.remove('hidden');
 
-const cardDeletBtn = document.getElementsByClassName("delet-btn")
-console.log(cardDeletBtn) 
-if(event.target.closest('.main-card')){
-  parentNode.remove()
+        if (allEmpty) totalCards.classList.add('hidden');
+        if (interviewEmpty || rejectEmpty) filterSection.classList.add('hidden');
+    } else {
+        notFound.classList.add('hidden');
+    }
 }
 
-  //intevid section element
-  if (event.target.classList.contains('interview-btn')) {
-    const statusContianer = parentNode.querySelector('.job-status')
-    statusContianer.innerHTML = `<button class = "btn btn-soft  btn-ghost text-[14px]">
-                INTERVIEW
-              </button>`
-    jobStatus = 'Interview'
-    const cardInfo = {
-      jobName,
-      jobSkill,
-      jobType,
-      jobTime,
-      jobSalary,
-      jobStatus,
-      jobDescription,
-    }
-    let cardItems = interviewList.find(
-      (item) => item.jobName === cardInfo.jobName,
-    )
+document.addEventListener('click', function (event) {
+    //all button node
+    let interviewButton = event.target.closest('.interview-btn')
+    let rejectButton = event.target.closest('.rejecetd-btn')
+    let deleteButton = event.target.closest('.delet-button') || event.target.closest('.btn-error');
 
-    if (!cardItems) {
-      interviewList.push(cardInfo)
-    }
-    rejecetdList = rejecetdList.filter(
-      (item) => item.jobName != cardInfo.jobName,
-    )
-    if (currntStatus == 'rejecetd-toggle') {
-      renderElementReject()
-    }
-  }
-  //reject
-  else if (event.target.classList.contains('rejecetd-btn')) {
-    const statusContianer = parentNode.querySelector('.job-status')
-    statusContianer.innerHTML = `<button class = "btn btn-soft  btn-ghost text-[14px]">
-                REJECTED
-              </button>`
-    jobStatus = 'Rejected'
-    const cardInfo = {
-      jobName,
-      jobSkill,
-      jobType,
-      jobTime,
-      jobSalary,
-      jobStatus,
-      jobDescription,
-    }
-    let cardItems = rejecetdList.find(
-      (item) => item.jobName === cardInfo.jobName,
-    )
+    // Intervier Onlcik
+    if (interviewButton) {
+        const parenNode = event.target.parentNode.parentNode
+        const jobName = parenNode.querySelector('.job-name').innerText
+        const jobSkill = parenNode.querySelector('.job-skill').innerText
+        const jobType = parenNode.querySelector('.job-type').innerText
+        const jobTime = parenNode.querySelector('.job-time').innerText
+        const jobSalary = parenNode.querySelector('.job-salary').innerText
+        const jobDescription = parenNode.querySelector('.job-description').innerText
+        const statusContianer = parenNode.querySelector('.job-status')
 
-    if (!cardItems) {
-      rejecetdList.push(cardInfo)
+        statusContianer.classList.remove('text-red-500')
+        statusContianer.classList.add('btn', 'btn-outline', 'border-2', 'text-green-500')
+        statusContianer.innerText = 'Interview'
+        let cardInfo = {
+            jobName,
+            jobSkill,
+            jobType,
+            jobTime,
+            jobSalary,
+            jobStatus: 'Interview',
+            jobDescription,
+        };
+        const interviewItem = interviewList.find(item => item.jobName === cardInfo.jobName);
+        if (!interviewItem) {
+            interviewList.push(cardInfo)
+        }
+        rejecetdList = rejecetdList.filter(item => item.jobName !== cardInfo.jobName);
+
+        // তোর লজিক অনুযায়ী রেন্ডার আর রিমুভ
+        if (currntStatus === 'interview-toggle') {
+            renderList(interviewList)
+        } else if (currntStatus === 'rejecetd-toggle') {
+            renderList(rejecetdList)
+        }
+
+        // অল ট্যাব থেকে সরানোর জন্য
+        if (event.target.closest('.card-parent')) {
+            event.target.closest('.card-parent').remove()
+        } else {
+            parenNode.parentNode.remove()
+        }
     }
-    interviewList = interviewList.filter(
-      (item) => item.jobName != cardInfo.jobName,
-    )
-    if (currntStatus == 'interview-toggle') {
-      renderElement()
+
+    // Reject Onlcik
+    else if (rejectButton) {
+        const parenNode = event.target.parentNode.parentNode
+        const jobName = parenNode.querySelector('.job-name').innerText
+        const jobSkill = parenNode.querySelector('.job-skill').innerText
+        const jobType = parenNode.querySelector('.job-type').innerText
+        const jobTime = parenNode.querySelector('.job-time').innerText
+        const jobSalary = parenNode.querySelector('.job-salary').innerText
+        const jobDescription = parenNode.querySelector('.job-description').innerText
+        const statusContianer = parenNode.querySelector('.job-status')
+
+        statusContianer.classList.remove('text-green-500')
+        statusContianer.classList.add('btn', 'btn-outline', 'border-2', 'text-red-500')
+        statusContianer.innerText = 'Rejected'
+
+        let cardInfo = {
+            jobName,
+            jobSkill,
+            jobType,
+            jobTime,
+            jobSalary,
+            jobStatus: 'Rejected',
+            jobDescription,
+        };
+        const rejectedItem = rejecetdList.find(item => item.jobName === cardInfo.jobName);
+        if (!rejectedItem) {
+            rejecetdList.push(cardInfo)
+        }
+        interviewList = interviewList.filter(item => item.jobName !== cardInfo.jobName);
+
+        if (currntStatus === 'rejecetd-toggle') {
+            renderList(rejecetdList)
+        } else if (currntStatus === 'interview-toggle') {
+            renderList(interviewList)
+        }
+
+        if (event.target.closest('.card-parent')) {
+            event.target.closest('.card-parent').remove()
+        } else {
+            parenNode.parentNode.remove()
+        }
     }
-  }
-  setTotal()
+
+    //Delet logic
+    else if (deleteButton) {
+
+        const parenNode = deleteButton.closest('.card') || deleteButton.closest('.card-parent')
+        const jobName = parenNode.querySelector('.job-name').innerText
+
+
+        if (currntStatus === 'all-toggle') {
+            const cardContainer = deleteButton.closest('.card-parent') || parenNode.parentNode;
+            cardContainer.remove()
+        } else {
+            interviewList = interviewList.filter(item => item.jobName !== jobName)
+            rejecetdList = rejecetdList.filter(item => item.jobName !== jobName)
+            if (currntStatus === 'interview-toggle') {
+                renderList(interviewList);
+            } else if (currntStatus === 'rejecetd-toggle') {
+                renderList(rejecetdList);
+            }
+        }
+    }
+
+    setTotal()
 })
 
-function renderElement() {
-  filterElement.innerHTML = ''
-  for (let interview of interviewList) {
-    console.log(interview)
-    let div = document.createElement('div')
-    div.innerHTML = `
-      <div class="main-card flex items-start justify-between space-y-8">
-          <!-- Card -->
-          <div class="main-card-content space-y-4">
-            <!-- card content -->
-            <div class="top-title mb-3">
-              <h1 class="job-name text-2xl font-bold text-[#002C5C] mb-1">
-               ${interview.jobName}
-              </h1>
-              <p class="job-skill text-xl font-normal text-[#64748B]">
-                ${interview.jobSkill}
-              </p>
-            </div>
-            <div class="flex items-center gap-2 text-slate-500 font-medium">
-              <span class="job-type">${interview.jobType}</span>
-              <span class="text-[6px] text-slate-500">
-                <i class="fa-solid fa-circle"></i
-              ></span>
-              <span class="job-time">${interview.jobTime}</span>
-              <span class="text-[6px] text-slate-500">
-                <i class="fa-solid fa-circle"></i
-              ></span>
-              <span class="jobSalry">${interview.jobSalary}</span>
-            </div>
-            <div class="space-y-2">
-              <button class="job-status btn btn-soft text-[14px]">
-                ${interview.jobStatus}
-              </button>
-              <p class="job-description text-gray-700">
-                ${interview.jobDescription}
-              </p>
-            </div>
-            <div class="job-btn space-x-2">
-              <button class="interview-btn btn btn-outline btn-success">
-                INTERVIEW
-              </button>
-              <button class="rejecetd-btn btn btn-outline btn-error">
-                REJECTED
-              </button>
-            </div>
-          </div>
-          <!-- Card DElet butoon -->
-          <button class="btn btn-ghost btn-error btn-outline">
-            <i class="delet-btn fa-regular fa-trash-can"></i>
-          </button>
-        </div>`
-    console.log(div)
-    filterElement.appendChild(div)
-  }
-}
-function renderElementReject() {
-  filterElement.innerHTML = ''
-  for (let rejecetd of rejecetdList) {
-    console.log(rejecetd)
-    let div = document.createElement('div')
-    div.innerHTML = `
-      <div class="main-card flex items-start justify-between space-y-8">
-          <!-- Card -->
-          <div class="main-card-content space-y-4">
-            <!-- card content -->
-            <div class="top-title mb-3">
-              <h1 class="job-name text-2xl font-bold text-[#002C5C] mb-1">
-               ${rejecetd.jobName}
-              </h1>
-              <p class="job-skill text-xl font-normal text-[#64748B]">
-                ${rejecetd.jobSkill}
-              </p>
-            </div>
-            <div class="flex items-center gap-2 text-slate-500 font-medium">
-              <span class="job-type">${rejecetd.jobType}</span>
-              <span class="text-[6px] text-slate-500">
-                <i class="fa-solid fa-circle"></i
-              ></span>
-              <span class="job-time">${rejecetd.jobTime}</span>
-              <span class="text-[6px] text-slate-500">
-                <i class="fa-solid fa-circle"></i
-              ></span>
-              <span class="jobSalry">${rejecetd.jobSalary}</span>
-            </div>
-            <div class="space-y-2">
-              <button class="job-status btn btn-soft text-[14px]">
-                ${rejecetd.jobStatus}
-              </button>
-              <p class="job-description text-gray-700">
-                ${rejecetd.jobDescription}
-              </p>
-            </div>
-            <div class="job-btn space-x-2">
-              <button class="interview-btn btn btn-outline btn-success">
-                INTERVIEW
-              </button>
-              <button class="rejecetd-btn btn btn-outline btn-error">
-                REJECTED
-              </button>
-            </div>
-          </div>
-          <!-- Card DElet butoon -->
-          <button class="btn btn-ghost btn-error btn-outline">
-            <i class="delet-btn fa-regular fa-trash-can"></i>
-          </button>
-        </div>`
-    console.log(div)
-    filterElement.appendChild(div)
-  }
-}
-function deleteCard(button){
-  
 
+function renderList(listToRender) {
+    filterSection.innerHTML = ''
+    for (let item of listToRender) {
+        const div = document.createElement('div')
+        div.innerHTML = ` 
+    <div class="card-parent flex flex-row items-start justify-between space-y-8">
+        <div class="card-content space-y-4">
+            <div class="top-title mb-3">
+              <h1 class="job-name text-2xl font-bold text-[#002C5C] mb-1">
+                ${item.jobName}
+              </h1>
+              <p class="job-skill text-xl font-normal text-[#64748B]">
+                 ${item.jobSkill}
+              </p>
+            </div>
+            <div class="flex items-center gap-2 text-slate-500 font-medium">
+              <span class="job-type"> ${item.jobType}</span>
+              <span class="text-[6px] text-slate-500">
+                <i class="fa-solid fa-circle"></i
+              ></span>
+              <span class="job-time"> ${item.jobTime}</span>
+              <span class="text-[6px] text-slate-500">
+                <i class="fa-solid fa-circle"></i
+              ></span>
+              <span class="job-salary"> ${item.jobSalary}</span>
+            </div>
+            <div class="space-y-2">
+              <button class="job-status btn btn-soft btn-ghost text-[14px]">
+                 ${item.jobStatus}
+              </button>
+              <p class="job-description text-gray-700">
+                 ${item.jobDescription}
+              </p>
+            </div>
+                 <div class="job-btn space-x-2">
+          <button class="interview-btn btn btn-outline btn-success">
+            INTERVIEW
+          </button>
+          <button class="rejecetd-btn btn btn-outline btn-error">
+            REJECTED
+          </button>
+        </div>
+      </div>
+      <!-- Card DElet butoon -->
+      <div>
+        <button class="delet-button btn btn-ghost btn-error ">
+          <i class=" fa-regular fa-trash-can"></i>
+        </button>
+      </div>
+        </div>`
+        filterSection.appendChild(div);
+    }
 }
+
+
